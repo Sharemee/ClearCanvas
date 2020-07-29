@@ -1,12 +1,9 @@
 using System;
-
 using System.Net;
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-
-
 
 namespace ClearCanvas.Common.Rest
 {
@@ -58,7 +55,6 @@ namespace ClearCanvas.Common.Rest
 	}
 
 	#endregion
-
 
 	/// <summary>
 	/// Utility class for interacting with HTTP REST style web services.

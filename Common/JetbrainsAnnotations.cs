@@ -342,12 +342,14 @@ namespace JetBrains.Annotations
 	{
 		public PublicAPIAttribute() { }
 
-		// ReSharper disable UnusedParameter.Local
+        // ReSharper disable UnusedParameter.Local
+#pragma warning disable CS1696 // #pragma 指令之后应是单行注释或行尾
 #pragma warning disable UnusedMember.Global
-		public PublicAPIAttribute(string comment) { }
+        public PublicAPIAttribute(string comment) { }
 #pragma warning restore UnusedMember.Global
-		// ReSharper restore UnusedParameter.Local
-	}
+#pragma warning restore CS1696 // #pragma 指令之后应是单行注释或行尾
+        // ReSharper restore UnusedParameter.Local
+    }
 
 	/// <summary>
 	/// Tells code analysis engine if the parameter is completely handled when the invoked method is on stack. 

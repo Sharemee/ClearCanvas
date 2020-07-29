@@ -20,7 +20,7 @@
     <SignAssembly>false</SignAssembly>
     <OldToolsVersion>3.5</OldToolsVersion>
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -54,6 +54,7 @@
     <WarningsAsErrors>
     </WarningsAsErrors>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>bin\Release\</OutputPath>
@@ -70,6 +71,7 @@
     <WarningsAsErrors>
     </WarningsAsErrors>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'UNIT_TESTS_USAGE_TRACKING|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -82,8 +84,15 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <WarningLevel>4</WarningLevel>
     <Optimize>false</Optimize>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\Desktop\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>..\Libs\nunit.framework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data">
@@ -97,12 +106,6 @@
     <Reference Include="System.Web" />
     <Reference Include="System.Xml">
       <Name>System.XML</Name>
-    </Reference>
-    <Reference Include="log4net">
-      <HintPath>..\ReferencedAssemblies\log4net.dll</HintPath>
-    </Reference>
-    <Reference Include="nunit.framework">
-      <HintPath>..\ReferencedAssemblies\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System.Configuration" />
   </ItemGroup>
@@ -121,8 +124,8 @@
     <Compile Include="Authorization\AuthorityTokenDefinition.cs" />
     <Compile Include="Authorization\IDefineAuthorityGroups.cs" />
     <Compile Include="Caching\MemoryCacheProvider.cs" />
-    <Compile Include="Caching\Tests\CacheProviderTestsBase.cs" />
     <Compile Include="Caching\Tests\AspWebCacheProviderTests.cs" />
+    <Compile Include="Caching\Tests\CacheProviderTestsBase.cs" />
     <Compile Include="Caching\Tests\MemoryCacheProviderTests.cs" />
     <Compile Include="ClassNameExtensionFilter.cs">
       <SubType>Code</SubType>
@@ -135,8 +138,17 @@
     <Compile Include="Configuration\SettingsClassMetaDataReader.cs" />
     <Compile Include="Configuration\SettingsGroupDescriptor.cs" />
     <Compile Include="Configuration\SettingsPropertyDescriptor.cs" />
-    <Compile Include="Configuration\Tests\SettingsGroupTests.cs" />
     <Compile Include="Configuration\Tests\AltAppSettingsFolderTests.cs" />
+    <Compile Include="Configuration\Tests\ApplicationSettingsExtensionsTests.cs" />
+    <Compile Include="Configuration\Tests\ConfigurationFileReaderTests.cs" />
+    <Compile Include="Configuration\Tests\SettingsGroupTests.cs" />
+    <Compile Include="Configuration\Tests\SettingsMigrationTests.cs" />
+    <Compile Include="Configuration\Tests\SettingsTestBase.cs" />
+    <Compile Include="Configuration\Tests\SimpleSettingsMigrationTests.cs" />
+    <Compile Include="Configuration\Tests\SimpleSettingsStore.cs" />
+    <Compile Include="Configuration\Tests\SystemConfigurationHelperTests.cs" />
+    <Compile Include="Configuration\Tests\TestSettingsClasses.cs" />
+    <Compile Include="Configuration\Tests\TestSettingsProvider.cs" />
     <Compile Include="DefaultExtensionFactory.cs" />
     <Compile Include="EvidenceExtensions.cs" />
     <Compile Include="ExtensionPoint.cs" />
@@ -385,15 +397,6 @@
     <Compile Include="Configuration\LocalFileSettingsProviderExtensions.cs" />
     <Compile Include="Configuration\Setup\MigrateLocalSharedSettingsApplication.cs" />
     <Compile Include="Configuration\SettingsMigrator.cs" />
-    <Compile Include="Configuration\Tests\ConfigurationFileReaderTests.cs" />
-    <Compile Include="Configuration\Tests\SystemConfigurationHelperTests.cs" />
-    <Compile Include="Configuration\Tests\ApplicationSettingsExtensionsTests.cs" />
-    <Compile Include="Configuration\Tests\SettingsTestBase.cs" />
-    <Compile Include="Configuration\Tests\SettingsMigrationTests.cs" />
-    <Compile Include="Configuration\Tests\SimpleSettingsMigrationTests.cs" />
-    <Compile Include="Configuration\Tests\SimpleSettingsStore.cs" />
-    <Compile Include="Configuration\Tests\TestSettingsClasses.cs" />
-    <Compile Include="Configuration\Tests\TestSettingsProvider.cs" />
     <Compile Include="Configuration\UserUpgradeStep.cs" />
     <Compile Include="Configuration\UserUpgradeStrategy.cs" />
     <Compile Include="Configuration\UpgradeSettings.cs" />
@@ -460,6 +463,7 @@
     <Compile Include="Utilities\UnitTestExtensionFactory.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Configuration\Tests\TestPreviousConfiguration.config" />
     <EmbeddedResource Include="SR.resx">
       <SubType>Designer</SubType>
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -472,8 +476,6 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="ClassDiagrams\Platform.cd" />
-    <EmbeddedResource Include="Configuration\Tests\TestPreviousConfiguration.config">
-    </EmbeddedResource>
     <None Include="Configuration\UpgradeSettings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>UpgradeSettings.Designer.cs</LastGenOutput>
@@ -486,6 +488,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>LicenseSettings.Designer.cs</LastGenOutput>
     </None>
+    <None Include="packages.config" />
     <None Include="ProductSettings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>ProductSettings.Designer.cs</LastGenOutput>

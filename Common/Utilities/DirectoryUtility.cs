@@ -239,10 +239,12 @@ namespace ClearCanvas.Common.Utilities
 			        DeleteIfEmpty(parent.FullName);
 		        }
 	        }
-	        catch (DirectoryNotFoundException e)
+	        catch (DirectoryNotFoundException ex)
 	        {
-		        // ignore
-	        }
+                // ignore
+                Platform.Log(LogLevel.Error, ex);
+                throw ex;
+            }
         }
 
         /// <summary>
